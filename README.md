@@ -21,7 +21,7 @@ after that you can easily use the app with that code to run in terminal/cmd (at 
 ``node app.js`` 
 
 open this URL ----> ``localhost:3000``
-to test original web site ----> https://izlebirlikte.selahattinemrekutlu.com.tr (open 2 or more tabs to see synchronization)
+to test original web site ---->  (open 2 or more tabs to see synchronization)
 
 TR
 
@@ -42,4 +42,4 @@ Sonrasında uygulamayı şu kodu terminal/cmd'de çalıştırarak bulabilirsiniz
 ``node app.js`` 
 
 bu URL'yi açın ----> ``localhost:3000``
-asıl siteyi test etmek için ----> https://izlebirlikte.selahattinemrekutlu.com.tr (2 ya da daha fazla sekme açarak senkronizasyonu görebilirsiniz)
+asıl siteyi test etmek için ---->  (2 ya da daha fazla sekme açarak senkronizasyonu görebilirsiniz)
