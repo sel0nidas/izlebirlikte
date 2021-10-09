@@ -1,0 +1,675 @@
+		<head>
+  <meta charset="UTF-8">
+  	<script src="/socket.io/socket.io.js"></script>
+<script src= "https://player.twitch.tv/js/embed/v1.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+	<link rel="icon" href="favicon.png"  type="image/x-icon"/>
+	<link rel="shortcut icon" href="favicon.png"  type="image/x-icon"/>
+  	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+  	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  	<meta name="apple-mobile-web-app-capable" content="yes" />
+  	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+	<meta name="description" content="izlebirlikte sizin arkadaşlarınızla veya açtığınız videoyu birlikte izlemek istediğiniz kişilerle kullanabileceğiniz bir platformdur.">
+	</head>
+  <style>
+    html{
+      overflow-x:hidden;
+    }
+	  .form-group{
+	  	margin-bottom:0 !important;
+		padding:0;
+	  }
+	  .row{
+		 overflow:hidden;
+	  	margin:0;
+		padding:0;
+	  }
+	  #player{
+      	margin:0;
+      	padding:0;
+      }
+	  .roomidtext{font-size:80%;}
+	  header{padding:0 !important;}
+	  @media only screen and (min-width: 768px){
+		  body{
+		  	height:100vh;
+		  }
+		  #header{
+		  	height:12%;
+		  }
+		  .main-bloque{
+		  	height:88%;
+		  }
+		  .youtube-player-side{
+		  	flex: 0 0 100%;
+    		max-width: 100%;
+		  }
+		  .twitch-side{
+			 position:relative;
+			  z-index:5;
+		  }
+		  .twitch-chat-side{
+			  position:relative;
+			  z-index:5;
+		  }
+		  .twitch-watch-bloque{
+		  	display:none;
+			flex-direction:column;
+		  }
+		  .twitch-chat-bloque{
+		  	display:none;
+			flex-direction:column;
+		  }
+		  .hide-twitch-bloque{
+			  padding:10px;
+			 position:absolute;
+			  right:80%;
+			  top:10%;
+			  z-index:5;
+		  }
+		  .hide-twitch-chat-bloque{
+			  padding:10px;
+			 position:absolute;
+			  left:0;
+			  top:0%;
+		  }
+		  #after-chat{
+		  	display:none;
+			  height:100%;
+		  }
+		  #after-chat>iframe{
+		  	height:100%;
+			width:100%;
+		  }
+	  }
+	  
+	
+    @media only screen and (max-width: 768px){
+		body{height:auto !important}
+		.main-bloques{height:100% !important;}
+      .row{
+        width:100%;
+        margin:0 !important;
+      }
+		.youtube-player-side{
+		  	flex: 0 0 100%;
+    		max-width: 100%;
+		  }
+		.twitch-chat-side{
+		display:none;}
+		.twitch-side{
+			display:none;
+		}
+		h6{
+			font-size:80%;
+		}
+		.user-type{
+			justify-content:flex-start;
+			padding:0;
+		}
+		.user-type>div{
+		justify-content:flex-start !important;
+		}
+		header{
+		 height:30% !important;
+		width:100%;
+	  	display:flex;
+	  	align-items:center;
+	  }
+    }
+	  
+	  #player{
+	  	height:100%;
+	  }
+	  header>.row{
+	  	width:100%;
+	  }
+	  .logout-btn{
+		  display:flex; 
+		  justify-content: flex-end;
+		  padding:2%;
+	  }
+	  .dropdown-item{
+	  		display:flex;
+		  	
+			justify-content:center;
+			align-items:center;
+		  
+	  }
+	  .dropdown-item>p,.dropdown-item>i{
+	  	margin-bottom:0 !important;
+	  } 
+	  .dropdown-item>p{
+		  
+		  padding-left:5%;
+		  padding-right:5%;
+		  display:flex;
+		  justify-content:center;
+		  align-items:center;
+	  }
+	  h6{
+	  	margin:0 !important;
+	  }
+	  .button-switch {
+  font-size: 1.5em;
+  height: 1.875em;
+  position: relative;
+  width: 4.5em;
+}
+.button-switch .lbl-off,
+.button-switch .lbl-on {
+  cursor: pointer;
+  display: block;
+  font-size: 0.5em;
+  font-weight: bold;
+  line-height: 1em;
+	top:0.4rem;
+  position: absolute;
+  transition: opacity 0.25s ease-out 0.1s;
+  text-transform: uppercase;
+}
+.button-switch .lbl-off {
+  right: 1em;
+  color: black;
+}
+.button-switch .lbl-on {
+	color:#fff;
+  opacity: 0;
+  left: 0.7em;
+}
+.button-switch .switch {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 0;
+  font-size: 1em;
+  left: 0;
+  line-height: 0;
+  outline: none;
+  position: absolute;
+  width: 0;
+}
+.button-switch .switch:before, .button-switch .switch:after {
+  content: "";
+  font-size: 1em;
+  position: absolute;
+}
+.button-switch .switch:before {
+  border-radius: 1.25em;
+  background: white;
+	border:3px solid #ffde59;
+  height: 1.875em;
+  left: -0.25em;
+  top: -0.1875em;
+  transition: background-color 0.25s ease-out 0.1s;
+  width: 4.5em;
+}
+.button-switch .switch:after {
+  box-shadow: 0 0.0625em 0.375em 0 #666;
+  border-radius: 50%;
+  background: white;
+	border-color: white !important;
+  height: 1.5em;
+  transform: translate(0, 0);
+  transition: transform 0.25s ease-out 0.1s;
+  width: 1.5em;
+}
+.button-switch .switch:checked:after {
+  transform: translate(2.5em, 0);
+}
+.button-switch .switch:checked ~ .lbl-off {
+  opacity: 0;
+}
+.button-switch .switch:checked ~ .lbl-on {
+  opacity: 1;
+}
+.button-switch .switch#switch-orange:checked:before {
+  background: black;
+}
+	  
+  .btn-outline-purple{
+  	color: #5e17eb;
+	  border:3px solid #5e17eb;
+  }
+	  .btn-outline-purple:hover{
+	  	background-color:#5e17eb;
+		  color:black;
+	  }
+	  
+	  .btn-outline-orange{
+  	color: #ff914d;
+	  border:3px solid #ff914d;
+  }
+	  .btn-outline-orange:hover{
+	  	background-color:#ff914d;
+		  color:black;
+	  }
+	  .btn-outline-turqoise{
+  	color: #5ce1e6;
+	  border:3px solid #5ce1e6;
+  }
+	  .btn-outline-turqoise:hover{
+	  	background-color:#5ce1e6;
+		  color:black;
+	  }
+  </style>
+	
+  <script>
+
+	  
+  var socket = io();
+	  
+  setInterval(()=>{
+	  if(!localStorage.getItem("username")){
+		  window.location = "/";
+	  }
+  },1000);
+  
+	  
+	function logout(){
+		var data = {id: socket.id, storageid:localStorage.getItem("socketid"), username: localStorage.getItem("username"), roomid: localStorage.getItem("roomid")};
+      	socket.emit('leave room',data);
+	  	localStorage.removeItem("username");
+		localStorage.removeItem("roomid");
+		localStorage.removeItem("socketid");
+		localStorage.removeItem("mod");
+		setTimeout(function(){
+			window.location = "/";
+		},1000);	
+      
+  }
+  //localStorage.setItem("socketid", socket.id);
+  
+  
+  setTimeout(
+      function(){
+          var data = {id: socket.id, storageid:localStorage.getItem("socketid") ,username: localStorage.getItem("username"), roomid: localStorage.getItem("roomid")};
+          socket.emit("new user",data);
+          console.log(data.storageid);
+          
+          console.log("Güncel Socket id: "+socket.id+"<br>"+"Geçmiş Socket id"+localStorage.getItem("socketid"));
+          localStorage.setItem("socketid",socket.id);
+          document.getElementById('info').innerHTML = "https://izlebirlikte.live?roomid="+localStorage.getItem("roomid");
+		  console.log("ODA NUMARASI:"+ localStorage.getItem("roomid"));
+          /*socket.on("message new user",(message)=>{
+              document.getElementById("...").innerHTML = message+" odaya katıldı."; 
+          });*/
+	  }	
+          ,5000);
+	  function copyText(id) {
+      var element = document.getElementById(id);
+  var range, selection, worked;
+
+  if (document.body.createTextRange) {
+    range = document.body.createTextRange();
+    range.moveToElementText(element);
+    range.select();
+	
+	
+  } else if (window.getSelection) {
+    selection = window.getSelection();        
+    range = document.createRange();
+    range.selectNodeContents(element);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+  
+  try {
+    document.execCommand('copy');
+    alert('Oda Davet Linki Başarıyla Kopyalandı');
+  }
+  catch (err) {
+    alert('Bir sorun oluştu, hemen tekrar dene. Olmazsa sayfayı yenile :)');
+  }
+}
+	  var counter = true;
+	  function expand(a,b,c){
+			var youtubebloque = document.getElementById("youtube-player-side");
+			var elementshowInner = document.getElementById("twitch-chat-side");
+			var elementmainwatch = document.getElementById("twitch-chat-bloque");
+			var elementshowInner = document.getElementById("twitch-chat-side");
+			var elementmainwatch = document.getElementById("twitch-chat-bloque");
+			var elementhidewatch = document.getElementById("hide-twitch-chat-bloque");
+		  	
+		  
+		  if(counter){
+			document.getElementById("chat-arrow").classList.remove("fa-arrow-right");
+		  	document.getElementById("chat-arrow").classList.add("fa-arrow-left");
+		  
+			youtubebloque.style.flex="0 0 80%"
+			youtubebloque.style.maxWidth="80%"
+
+			elementshowInner.style.display = "flex";
+			elementshowInner.style.flex="0 0 20%";
+			elementshowInner.style.maxWidth="20%";
+
+			elementmainwatch.style.display= "block";  
+			elementmainwatch.style.width= "100%";
+		  	counter=false;
+			}
+		  else{
+			document.getElementById("chat-arrow").classList.add("fa-arrow-right");
+		  	document.getElementById("chat-arrow").classList.remove("fa-arrow-left");
+		  
+			youtubebloque.style.flex="0 0 100%"
+			youtubebloque.style.maxWidth="100%"
+
+			elementshowInner.style.display = "flex";
+			elementshowInner.style.flex="0 0 0%";
+			elementshowInner.style.maxWidth="0%";
+			
+			  
+			elementmainwatch.style.display= "none";  
+			elementmainwatch.style.width= "0%";
+			counter=true;
+		  }
+		
+	  }
+	  var headercounter = false;
+	  function headersize(){
+		  
+		if(!headercounter){
+			document.getElementById("header").style.height = "0%";
+			document.getElementById("header").style.display = "none";
+			document.getElementById("main-bloque").style.height = "100%";
+			  
+			document.getElementById("up-button").classList.remove("fa-arrow-up");
+			document.getElementById("up-button").classList.add("fa-arrow-down");
+			
+			headercounter = true;
+		}
+		else{
+			document.getElementById("header").style.height = "12%";
+			document.getElementById("header").style.display = "block";
+			document.getElementById("main-bloque").style.height = "88%";
+			  
+			document.getElementById("up-button").classList.remove("fa-arrow-down");
+			document.getElementById("up-button").classList.add("fa-arrow-up");
+			
+			headercounter = false;
+		}
+	  	
+	  }
+  </script>
+<script>
+// 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+  
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+    var player;
+    
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '50%',
+        width: '100%',
+        videoId: '',
+        playerVars: {
+          'playsinline': 1
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+	
+    var tempvideoid;
+	var tempplaylistid;
+    var urlstr;
+	    
+
+</script>
+  <body>
+	<!--<div class="bg-success" style="position:absolute; bottom:0; display:flex; justify-content:center; z-index:999;">test</div>-->
+			
+  <header id="header" class="col-12">
+      <div class="row">
+        <div class="col-md-3 col-sm-12" style="display:flex; justify-content:center; align-items:center;"><img id="izlebirlikte-logo" style="width: 100%;" src="izlebirlikte-light.svg" alt="izlebirlikte"></div>
+		  
+		  
+        <div class="col-md-2 col-sm-12" style="display: flex; flex-direction:column;">
+          <div style="display:flex; justify-content:center; align-items:center; height:100%;">
+			  <div class="col-md-8 roomidtextbloque" style="opacity:0; position:absolute; z-index:-555; justify-content:center; align-items:center; height:100%;">
+            	<h6 class="roomidtext">Oda Davet Linki&nbsp;&nbsp;</h6>
+				<h6>:&nbsp;&nbsp;</h6>
+            	<h6 id="info" class="roomidtext"></h6>
+			  </div>
+			  <div class="col-md-12" style="display:flex; justify-content:center; align-items:center; height:100%; width:100%">
+            <button class="btn btn-outline-purple" style="width:100%; display:flex; justify-content: space-evenly; align-items:center;" onclick='copyText("info")'><i class="fas fa-link"></i><h6 class="roomidtext">Odaya Davet Linkini Kopyala</h6></button>
+			  </div>
+          </div>
+        
+        </div>
+		  <div class="col-md-2 col-sm-12" style="display:flex; justify-content:center; align-items:center;"></div>
+		  
+		  <div class="col-md-5 col-sm-12" style="display:flex; justify-content:center; padding:0;">
+			  <div class="col-md-4" style="display:flex; justify-content:center; align-items:center; padding-top: 2%;">
+		  	<div class="button-switch">
+  <input type="checkbox" id="switch-orange" class="switch" />
+  <label for="switch-orange" class="lbl-off"><i class="fas fa-2x fa-sun"></i></label>
+  <label for="switch-orange" class="lbl-on"><i class="fas fa-2x fa-moon"></i></label>
+</div>
+		  </div>
+		  <div class="col-5 user-type">
+          <div style="display:flex; justify-content:center; align-items:center; height:100%;">
+        
+            <h6>Kullanıcı türü:&nbsp;</h6>
+			<h6 id="mod"></h6>
+			
+          </div>
+        
+        </div>
+			  <div class="col-3" style="display:flex; justify-content:center; align-items:center; height:100%;">
+				  <button class="btn btn-outline-orange" style="width:100%;" onclick='logout()'><h6>Çıkış</h6></button>
+			  </div>
+		  </div>
+      </div>
+  </header>
+  
+	<div style="position:absolute; top:2%; left:48.7%; display:flex; justify-content:center; align-items:center;"><button style=" z-index:555;" onclick="headersize()" class="btn btn-outline-turqoise"><i id="up-button" class="fas fa-arrow-up"></i></button></div>	  
+  
+  <div id="main-bloque" class="row main-bloques" style="height:88%;">
+	  <div id="twitch-chat-side" class="twitch-chat-side">
+	  <div id="hide-twitch-chat-bloque" class="hide-twitch-chat-bloque text-light">
+			<button onclick="expand()" class="btn btn-outline-light " style="display:flex; width:70px; height:30px; justify-content: space-between;">
+				<i class="fab fa-twitch"></i><i id="chat-arrow" class="fas fa-arrow-right"></i>
+			</button>
+		</div>
+		  <div id="twitch-chat-bloque" class="twitch-chat-bloque">
+		  	<div id="before-chat" style="height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center;" class="bg-dark">
+				<h3 class="text-light">TWITCH KÖŞESİ</h3>
+				
+			<form class="form-group" id="channelform" style="width:100%; display:flex; flex-direction:column; justify-content:center; align-items:stretch; height:60px;">
+				<input style="height:100% !important;" type='text' id="channelname" class="form-control" placeholder="İzleyeceğiniz twitch kanalının kullanıcı adını giriniz">
+				<button class="btn btn-outline-turqoise"><h6>Aç Kanalı</h6></button>
+				
+			</form>
+			</div>
+			  <div id="after-chat">
+			  	 <iframe id="twiframe" src=""></iframe>
+			  </div>
+		  </div>
+	  </div>
+    
+	  <div id="youtube-player-side" class="youtube-player-side">
+		  
+		  
+		  <div>
+		  	<div class="col-12" id="player">
+				
+			  </div>
+			  <form id="frm" class="form-group col-12" style="width:100%; display:none; justify-content:center; align-items:stretch; height:60px;">
+		  	<input style="height:100% !important;" class="form-control" id="videoid" type="text" name="videoId" placeholder="https://www.youtube.com/watch?v=kd0d2JDuiT5 örnek formatında linkinizi girin">
+      <button class="btn btn-outline-turqoise"><h6>Video Açılsın</h6></button>
+  </form>
+		  </div>
+	  
+	  </div>
+    <!--<div id="twitch-stream-side" class="twitch-side" style="min-height:100%;">
+		<div id="hide-twitch-stream-bloque" class="hide-twitch-bloque text-light">
+			<button class="btn btn-outline-light " onclick="expand()">
+				<i id="stream-arrow" class="fas fa-arrow-left"></i>
+			</button>
+		</div>
+		<div id="twitch-watch-bloque" class="twitch-watch-bloque">
+				
+			<div style="height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center;" class="bg-dark">
+				<h3 class="text-light">TWITCH KÖŞESİ</h3>
+				
+			<form class="form-group" id="channelform" style="width:100%; display:flex; justify-content:center; align-items:stretch; height:60px;">
+				<input style="height:100% !important;" type='text' id="channelname" class="form-control" placeholder="İzleyeceğiniz twitch kanalının kullanıcı adını giriniz">
+				<button class="btn btn-outline-turqoise"><h6>Aç Kanalı</h6></button>
+			
+			</form>
+			</div>
+		  </div>
+      <div style="display: flex; flex-direction:column;">
+        <div style="display:flex; align-items:center;">
+			<h1>Oda numarası:</h1>
+          <h1 id="info"></h1>
+        </div>
+		  
+      </div>
+    </div>-->
+  </div>
+	   
+    </body>
+  <script>
+	  
+	  var logo = document.getElementById("izlebirlikte-logo");
+	  var checkbox = document.getElementById("switch-orange");
+	  
+	  if(localStorage.getItem("theme") == "dark"){
+	  	checkbox.checked = true;
+		  document.body.style.backgroundColor = "black";
+		  logo.src = "izlebirlikte-dark.svg";
+		  document.body.style.color = "white";
+	  }
+	  checkbox.addEventListener("change",(event)=>{
+		  if(localStorage.getItem("theme") == "dark"){
+		  	document.body.style.backgroundColor = "white";
+			  document.body.style.color= "black";
+			localStorage.setItem("theme","light");
+			 logo.src = "izlebirlikte-light.svg";
+		  }
+		  else if(localStorage.getItem("theme") == "light" || !localStorage.getItem("theme")){
+	  		document.body.style.backgroundColor = "black";
+		  logo.src = "izlebirlikte-dark.svg";
+		  document.body.style.color = "white";
+			  document.body.style.transitionDuration = "0.4s";
+			localStorage.setItem("theme","dark");
+		  }
+	  })
+    form = document.getElementById("frm");
+    videoid = document.getElementById("videoid");
+	  
+	  
+    playlistform = document.getElementById("playlistfrm");
+    playlistid = document.getElementById("playlistid");
+	
+	
+	var channelform = document.getElementById("channelform");
+	var channelname = document.getElementById("channelname");
+	var tempchannelname;
+	channelform.addEventListener('submit',function(e){
+		e.preventDefault();
+		tempchannelname = channelname.value;
+		document.getElementById("before-chat").style.display="none";
+		document.getElementById("after-chat").style.display="block";
+		document.getElementById("twiframe").src = "https://www.twitch.tv/embed/"+tempchannelname+"/chat?parent=izlebirlikte.live&darkpopout";
+	});
+    
+    
+    
+    form.addEventListener("submit",function(e){
+        e.preventDefault();
+        player.loadVideoById(videoid.value.substring(32,43));
+        tempvideoid = videoid.value;
+        socket.emit("videoid",{id: tempvideoid.substring(32,43), time: player.getCurrentTime(), roomid: localStorage.getItem("roomid")});
+    });
+    
+    function onPlayerReady(event) {
+    data={msg: event.data, time: event.target.getCurrentTime(), roomid: localStorage.getItem("roomid"), username: localStorage.getItem("username")};
+    socket.emit('event message',  data);
+    }
+    function onPlayerStateChange(event) {
+      data={msg: event.data, time: event.target.getCurrentTime(), roomid: localStorage.getItem("roomid"), username: localStorage.getItem("username")};
+    socket.emit('event message',  data);
+  }
+
+    
+  setInterval(
+    function(){ 
+		if(tempvideoid){
+		socket.emit("event message",{msg: player.getPlayerState(), time: player.getCurrentTime(), roomid: localStorage.getItem("roomid"), username: localStorage.getItem("username")}); 
+        socket.emit("videoid",{id: tempvideoid.substring(32,43), time: player.getCurrentTime(), roomid: localStorage.getItem("roomid"), username: localStorage.getItem("username")});
+	}
+
+	}
+        , 500);
+  
+  socket.on('event message', function(data) {
+      console.log("playerstate: "+data.msg);
+      console.log("socket time: "+data.time);
+      console.log("client player time: "+player.getCurrentTime());
+      
+	  localStorage.setItem("izlebirlikte twitch player state",data.msg);
+	  localStorage.setItem("izlebirlikte twitch player time",data.time);
+	  
+      if(Math.abs( data.time - player.getCurrentTime() ) >= 3 && data.time>1){player.seekTo(data.time);}
+      
+      if(!data.time){
+        data.time = player.getCurrentTime();
+        player.seekTo(data.time);
+      }
+      if(data.msg == -1){
+          player.playVideo();
+      }
+      if(data.msg == 1){
+          player.playVideo();
+      }
+      else if(data.msg == 2){
+		  
+		  player.seekTo(data.time);
+          player.pauseVideo();
+      }
+      else if(data.msg == 3){
+          player.playVideo();
+      }
+      
+  });
+	  
+	  
+  socket.on("videoid",(YTvideodata)=>{
+	  var checkvideourl = player.getVideoUrl().includes(YTvideodata.id);
+          if(!checkvideourl){
+              player.loadVideoById(YTvideodata.id);
+              player.seekTo(YTvideodata.time);
+              player.playVideo();
+			  localStorage.setItem("izlebirlikte twitch video id",YTvideodata.id);
+          }
+      });
+	  
+	  socket.on("twiframe video url",(data)=>{
+		  console.log(data.channel);
+		  if(document.getElementById("twiframe").src != "https://www.twitch.tv/embed/"+data.channel+"/chat?parent=izlebirlikte.live&darkpopout"){
+        document.getElementById("twiframe").src = "https://www.twitch.tv/embed/"+data.channel+"/chat?parent=izlebirlikte.live&darkpopout";
+		  }
+	  });
+	  socket.on("message new user",(data)=>{
+	  	console.table(data);
+	  });
+	  socket.on("moderator check",(msga)=>{
+	  	console.log(msga);
+		  localStorage.setItem("mod",msga);
+		  document.getElementById("mod").innerHTML=msga;
+	  });
+  </script>

@@ -1,0 +1,356 @@
+<head>
+	<meta charset="UTF-8">
+	<title>izlebirlikte</title>
+	<meta name="description" content="İzlebirlikte, arkadaşlarınızla beraber video izleyebileceğiniz bir platformdur. İzlebirlikte sayesinde oda kurun, video açın ya da oda kuran arkadaşınızın odasına katılın. Arkadaşlarınızla birlikte izleyin">
+	<link rel="icon" href="favicon.png"  type="image/x-icon"/>
+	<link rel="shortcut icon" href="favicon.png"  type="image/x-icon"/>
+    <script src="/socket.io/socket.io.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+  	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  	<meta name="apple-mobile-web-app-capable" content="yes" />
+  	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+	<meta name="keywords" content="izlebirlikte, izle birlikte, birlikte izle, birlikte youtube izle, beraber youtube izle">
+	
+	
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-P48EC48R4Y"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-P48EC48R4Y');
+</script>
+</head>
+<body>
+	<style>
+		html{
+			overflow-x:hidden
+		}
+		
+		/*body{
+			background-image: url("bgimg.jpg");
+			background-repeat:no-repeat;
+			background-size:100%;
+		}*/
+		.login-form{
+			margin:0;
+			padding:0;
+			height:85%;
+		}
+		header>.row{
+			height:100%;
+		}
+		.howtobuttonmobile{
+			display:none !important;
+		}
+		.form-group{
+			margin-bottom:0 !important;
+		}
+		@media only screen and (min-width: 768px){
+			body{
+				height:100vh;
+			}
+			header{
+				height:12%;
+			}
+			.login-form{
+				height:88%;
+			}
+		}
+		@media only screen and (max-width: 768px){
+			/*body{background-size:auto !important; }*/
+			header{
+				height:25%;
+			}
+			.existroom{
+				border-right:0px !important;
+			}
+			.newroom{
+				border-left:0px !important;
+			}
+			.howtobuttonmobile{
+				display:block !important;
+			}
+			.howtobutton{
+				display:none !important;
+			}
+		}
+		.row{
+			padding:0;
+			margin:0;
+		}
+		.newroom{
+			border-left:10px solid #5e17eb;
+			border-top:10px solid #5e17eb; 
+			display:flex; height:100%;
+			justify-content:center;
+			flex-direction:column; 
+			align-items:center;
+		}
+		
+		.button-switch {
+		  font-size: 1.5em;
+		  height: 1.875em;
+		  position: relative;
+		  width: 4.5em;
+		}
+.button-switch .lbl-off,
+.button-switch .lbl-on {
+  cursor: pointer;
+  display: block;
+  font-size: 0.5em;
+  font-weight: bold;
+  line-height: 1em;
+	top:0.4rem;
+  position: absolute;
+  transition: opacity 0.25s ease-out 0.1s;
+  text-transform: uppercase;
+}
+.button-switch .lbl-off {
+  right: 1em;
+  color: black;
+}
+.button-switch .lbl-on {
+	color:#fff;
+  opacity: 0;
+  left: 0.7em;
+}
+.button-switch .switch {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 0;
+  font-size: 1em;
+  left: 0;
+  line-height: 0;
+  outline: none;
+  position: absolute;
+  width: 0;
+}
+.button-switch .switch:before, .button-switch .switch:after {
+  content: "";
+  font-size: 1em;
+  position: absolute;
+}
+.button-switch .switch:before {
+  border-radius: 1.25em;
+  background: white;
+	border:3px solid #ffde59;
+  height: 1.875em;
+  left: -0.25em;
+  top: -0.1875em;
+  transition: background-color 0.25s ease-out 0.1s;
+  width: 4.5em;
+}
+.button-switch .switch:after {
+  box-shadow: 0 0.0625em 0.375em 0 #666;
+  border-radius: 50%;
+  background: black;
+	border-color: white !important;
+  height: 1.5em;
+  transform: translate(0, 0);
+  transition: transform 0.25s ease-out 0.1s;
+  width: 1.5em;
+}
+.button-switch .switch:checked:after {
+  transform: translate(2.5em, 0);
+	background: white;
+}
+.button-switch .switch:checked ~ .lbl-off {
+  opacity: 0;
+}
+.button-switch .switch:checked ~ .lbl-on {
+  opacity: 1;
+}
+.button-switch .switch#switch-orange:checked:before {
+  background: black;
+}
+		
+		.btn-outline-purple{
+  	color: #5e17eb;
+	  border:3px solid #5e17eb;
+  }
+	  .btn-outline-purple:hover{
+	  	background-color:#5e17eb;
+		  color:black;
+	  }
+	  
+	  .btn-outline-orange{
+  	color: #ff914d;
+	  border:3px solid #ff914d;
+  }
+	  .btn-outline-orange:hover{
+	  	background-color:#ff914d;
+		  color:black;
+	  }
+	  .btn-outline-turqoise{
+  	color: #5ce1e6;
+	  border:3px solid #5ce1e6;
+  }
+	  .btn-outline-turqoise:hover{
+	  	background-color:#5ce1e6;
+		  color:black;
+	  }
+		h6{
+		margin:0;
+		}
+	</style>
+	<script>
+		
+		function randomString(length) {
+                var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');     
+                if (! length) {
+                    length = Math.floor(Math.random() * chars.length);
+                }
+            
+                var str = '';
+                for (var i = 0; i < length; i++) {
+                    str += chars[Math.floor(Math.random() * chars.length)];
+                }
+                return str;
+            }
+            function equalstringto(inputId){
+                document.getElementById(inputId).value = randomString(8);
+            }
+		
+		var socket = io();
+		
+		if(localStorage.getItem("username")){
+        	localStorage.setItem("user already exists","yes");
+        	window.location = "/room";
+    	}
+		const urlParams = new URLSearchParams(window.location.search);
+		if(urlParams.get('roomid')){
+			if(urlParams.get('roomid').length == 8){
+				var data = {username: localStorage.getItem("username"), roomid: localStorage.getItem("roomid")};
+				socket.emit('leave room',data);
+					localStorage.removeItem("username");
+      				localStorage.removeItem("roomid");
+      				localStorage.removeItem("socketid");
+	  				localStorage.removeItem("mod");
+					  
+					localStorage.setItem("username", randomString(8));
+					localStorage.setItem("roomid", urlParams.get('roomid'));
+					localStorage.setItem("mod", "izleyici");
+					window.location = "/room";
+				
+				
+			}
+			else{
+				window.alert("Oda Numarası Hatalı");
+			}
+			
+			
+		}
+			
+	</script>
+	<header class="col-md-12">
+      <div class="row">
+		  <div class="col-md-4 howtobutton" style="display:flex; align-items:center;"><a href="nasil-kullanilir" class="btn btn-outline-turqoise"><h6>Nasıl Kullanılır ?</h6></a></div>
+        <div class="col-md-4"><img id="izlebirlikte-logo" style="width: 100%;" src="izlebirlikte-light.svg" alt="izlebirlikte"></div>
+
+ 			<div class="col-md-4 col-6 howtobuttonmobile" style="display:flex; align-items:center;"><button class="btn btn-outline-turqoise"><h6>Nasıl Kullanılır ?</h6></button></div>
+		  
+        <div class="col-md-4 col-6" style="display:flex; justify-content: flex-end; padding:2%">
+          <div class="button-switch">
+  <input type="checkbox" id="switch-orange" class="switch" />
+  <label for="switch-orange" class="lbl-off"><i class="fas fa-2x fa-sun"></i></label>
+  <label for="switch-orange" class="lbl-on"><i class="fas fa-2x fa-moon"></i></label>
+</div>
+        </div>
+      </div>
+  	</header>
+	
+	<div class="login-form col-12 row">
+	
+		<div class="row" style="width:100%;">
+			<div class="col-md-6 existroom" style="border-right:10px solid #ff914d; border-top:10px solid #ff914d; display:flex; height:100%; justify-content:center; flex-direction:column; align-items:center;">
+				<div style="border-radius:0.5rem; padding:5% 2%; text-align:center;">
+					<h1>Mevcut Bir Odaya Giriş</h1>
+					<h4>Oda kurucusu olan arkadaşınızdan davet linkini alın ve buraya yapıştırın. Odada tek başına ne yapacak yahu? Birlikte izleyin :) </h4>
+					<h6>(Moderatör olmak istiyorsanız yeniden oda kurmanız gerekir)</h6>
+					<h6>(Odadaki herkes çıkmışsa oda kullanılamaz ve katılınamaz demektir)</h6>
+					<form class="form-group" id="frm" style="display:flex; flex-direction:column;">
+						<input class="form-control" style="margin-top:2%; width:100%" id="roomid" type="text" name="roomId" placeholder="Oda Davet Linkini Giriniz">
+						<button class="mt-3 btn btn-outline-orange"><h6>Odaya gir</h6></button>	
+					</form>
+				</div>
+			</div>
+
+			<div class="col-md-6 newroom">
+				<div style="border-radius:0.5rem; padding:5% 2%; text-align:center;">
+				<h1>Yeni Oda Kur</h1>
+				<h4>Oda kurun ve davet linkini arkadaşlarınızla paylaşarak birlikte izlemenin tadını çıkarın. Odada tek başınıza yapacak pek de fazla şey yok. Arkadaşlarını çağır, onlarla birlikte izle.</h4>
+					<form class="form-group" id="frmnew" style="display:flex; flex-direction:column;">
+
+						<button style="cursor:pointer; margin-top:3%;" class="btn btn-outline-purple"><h6>Oda Oluştur</h6></button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	var checkbox = document.getElementById("switch-orange");
+	var logo = document.getElementById("izlebirlikte-logo");
+	
+	if(localStorage.getItem("theme") == "dark"){
+	  	checkbox.checked = true;
+		  document.body.style.backgroundColor = "black";
+		  logo.src = "izlebirlikte-dark.svg";
+		  document.body.style.color = "white";
+	  }
+	
+	checkbox.addEventListener("change",(event)=>{
+		  if(localStorage.getItem("theme") == "dark"){
+		  	document.body.style.backgroundColor = "white";
+			  document.body.style.color= "#18181b";
+			localStorage.setItem("theme","light");
+			 logo.src = "izlebirlikte-light.svg";
+		  }
+		  else if(localStorage.getItem("theme") == "light" || !localStorage.getItem("theme")){
+	  		document.body.style.backgroundColor = "#18181b";
+		  logo.src = "izlebirlikte-dark.svg";
+		  document.body.style.color = "white";
+			  document.body.style.transitionDuration = "0.4s";
+			localStorage.setItem("theme","dark");
+		  }
+	  });
+	
+    var form = document.getElementById("frm");
+    var roomid = document.getElementById("roomid");
+	
+	
+    form.addEventListener('submit',(e)=>{
+        e.preventDefault();
+        localStorage.setItem("username", randomString(8));
+		const roomidfromlink = roomid.value.substr(33,41)
+		if(roomidfromlink.length == 8){
+			
+        	localStorage.setItem("roomid", roomidfromlink);
+			window.location = "/room";
+		}
+		else{
+			window.alert("Oda Numarası Hatalı");	
+		}
+		
+		
+		
+    });
+	
+	var formnew = document.getElementById("frmnew");
+	
+	formnew.addEventListener('submit',(e)=>{
+        e.preventDefault();
+        localStorage.setItem("username", randomString(8));
+        localStorage.setItem("roomid", randomString(8));
+        window.location.href = "/room";
+    });
+
+
+</script>
