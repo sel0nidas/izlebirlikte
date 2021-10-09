@@ -1,0 +1,185 @@
+<html>
+  <head>
+	  <meta charset="UTF-8">
+    <title>Nasıl Kullanılır</title>
+	  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+	<link rel="icon" href="favicon.png"  type="image/x-icon"/>
+	<link rel="shortcut icon" href="favicon.png"  type="image/x-icon"/>
+  	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+  	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  	<meta name="apple-mobile-web-app-capable" content="yes" />
+  	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Signika:wght@600;700&display=swap" rel="stylesheet">
+  </head>
+	<style>
+		html{
+		overflow-x:hidden;
+		}
+		body{font-family: 'Signika', sans-serif;}
+		header>.row{
+			height:100%;
+		}
+		.row{
+		 overflow:hidden;
+	  	margin:0;
+		padding:0;
+	  }
+		@media only screen and (min-width: 768px){
+		}
+		.how-main-title{
+			text-align:center;	
+		}
+		.how-main-bloque{
+			padding:2% 4%;	
+		}
+		.button-switch {
+  font-size: 1.5em;
+  height: 1.875em;
+  position: relative;
+  width: 4.5em;
+}
+.button-switch .lbl-off,
+.button-switch .lbl-on {
+  cursor: pointer;
+  display: block;
+  font-size: 0.5em;
+  font-weight: bold;
+  line-height: 1em;
+	top:0.4rem;
+  position: absolute;
+  transition: opacity 0.25s ease-out 0.1s;
+  text-transform: uppercase;
+}
+.button-switch .lbl-off {
+  right: 1em;
+  color: black;
+}
+.button-switch .lbl-on {
+	color:#fff;
+  opacity: 0;
+  left: 0.7em;
+}
+.button-switch .switch {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 0;
+  font-size: 1em;
+  left: 0;
+  line-height: 0;
+  outline: none;
+  position: absolute;
+  width: 0;
+}
+.button-switch .switch:before, .button-switch .switch:after {
+  content: "";
+  font-size: 1em;
+  position: absolute;
+}
+.button-switch .switch:before {
+  border-radius: 1.25em;
+  background: white;
+	border:3px solid #ffde59;
+  height: 1.875em;
+  left: -0.25em;
+  top: -0.1875em;
+  transition: background-color 0.25s ease-out 0.1s;
+  width: 4.5em;
+}
+.button-switch .switch:after {
+  box-shadow: 0 0.0625em 0.375em 0 #666;
+  border-radius: 50%;
+  background: white;
+	border-color: white !important;
+  height: 1.5em;
+  transform: translate(0, 0);
+  transition: transform 0.25s ease-out 0.1s;
+  width: 1.5em;
+}
+.button-switch .switch:checked:after {
+  transform: translate(2.5em, 0);
+}
+.button-switch .switch:checked ~ .lbl-off {
+  opacity: 0;
+}
+.button-switch .switch:checked ~ .lbl-on {
+  opacity: 1;
+}
+.button-switch .switch#switch-orange:checked:before {
+  background: black;
+}
+	  
+  .btn-outline-purple{
+  	color: #5e17eb;
+	  border:3px solid #5e17eb;
+  }
+	  .btn-outline-purple:hover{
+	  	background-color:#5e17eb;
+		  color:black;
+	  }
+	  
+	  .btn-outline-orange{
+  	color: #ff914d;
+	  border:3px solid #ff914d;
+  }
+	  .btn-outline-orange:hover{
+	  	background-color:#ff914d;
+		  color:black;
+	  }
+	  .btn-outline-turqoise{
+  	color: #5ce1e6;
+	  border:3px solid #5ce1e6;
+  }
+	  .btn-outline-turqoise:hover{
+	  		background-color:#5ce1e6;
+		  color:black;
+	  }
+	</style>
+  <body style="width:100%; background-color:#b8b9bb;">
+	<header class="col-md-12 bg-secondary" style="height:20%;">
+      <div class="row" style="display:flex; align-items:center;">
+        <div class="col-md-4 col-12"><img id="izlebirlikte-logo" style="width:100%; display:flex; justify-content:flex-start;" src="izlebirlikte-light.svg"></div>
+
+        <div class="col-md-8 col-6" style="display:flex; justify-content: flex-end; padding:2%">
+        <div class="button-switch">
+			<input type="checkbox" id="switch-orange" class="switch" />
+			<label for="switch-orange" class="lbl-off"><i class="fas fa-2x fa-sun"></i></label>
+			<label for="switch-orange" class="lbl-on"><i class="fas fa-2x fa-moon"></i></label>
+		</div>
+        </div>
+      </div>
+  	</header>
+	  <div class="row how-main-bloque" style="display:flex; justify-content:center;">
+		  <h1 class="how-main-title">İzleyici iseniz</h1>
+		  <div class="col-12 row ">
+			  
+			  <div class="col-12" style=" height:600px; display:flex; flex-direction:column;"><h5>Moderatör olan kişi size direkt olarak şuradan linki paylaşabilir</h5><img src="izlebirlikte-nasil-paylas.png" width="100%"><hr></div>
+			  <div class="col-md-6" style=" height:450px; display:flex; flex-direction:column; margin-top:3%;"><h5>Davet Linkini İster Sitedeki Odaya Girme Alanına</h5><img src="izleyici-nasil-login.png" width="100%"></div>
+			  <div class="col-md-6" style=" height:450px; display:flex; flex-direction:column; margin-top:3%;"><h5>İsterseniz De Direkt Olarak Linke Tıklayarak Odaya Gidebilirsiniz</h5><img src="izleyici-nasil-link.png" width="100%"></div>
+			  <div class="col-12" style=" height:700px; display:flex; flex-direction:column;"><h5>Karşınızda şu şekilde bir ekran gelecektir.</h5><img src="izleyici-nasil-room.png" width="100%"></div>
+			  <div class="col-12 row">
+			  	<div class="col-3" style="padding:2% 1%; height:300px; display:flex; flex-direction:column;"><h5 class="">Tema modunu istediğiniz şekilde değiştirebilirsiniz</h5><img src="theme-dark.png" width="50%" height="100"><img src="theme-light.png" width="50%" height="100"></div>
+			  <div class="col-md-3" style="padding:2%; height:300px; display:flex; flex-direction:column;"><h5>Birlikte izlediğiniz youtube videosu dışında bir canlı yayını da takip etmek istiyorsanız:</h5>
+				  <ul>
+				  <li>Öncelikle <a href="https://chrome.google.com/webstore/detail/picture-in-picture-extens/hkgfoiooedgoejojocmhlaklaeopbecg">şu eklentiyi</a> indirin</li>
+				  <li>Sonrasında izlemek istediğiniz yayının olduğu sayfadayken eklentinin üzerine tıklayın <br><b>Picture-in-Picture Extension (by Google)</b></li>
+					  <li>Eğer Chrome kullanmıyorsanız Opera'daki <a href="https://addons.opera.com/en/extensions/details/install-chrome-extensions/">bu eklentiyi</a> indirip oradan chrome'daki gibi eklenti kurabilirsiniz</li>
+					  <li>Eğer Chrome kullanıyorsanız ayrıca picture in picture eklentisi yüklemeden de picture in picture moduna alabilirsiniz</li>
+					  <img src="eklentisizpip.png" width="300" height="100">
+				  </ul>
+			  </div>
+			  <div class="col-2">
+			  	 <img src="pipinst.png" height="350">
+			  </div>
+			  <div class="col-4" style="padding:2%; height:300px; display:flex; flex-direction:column;"><img src="afterpip.png" width="100%" height="200"><div style="height:200px; display:flex; align-items:center;"><p>Örnek olarak tıkladığınızda ekrandaki video/yayın yukarıdaki şekilde gözükmesi gerekiyor</p></div></div>
+			  </div>
+			  
+		  </div>
+	  </div>
+  </body>
+</html>
