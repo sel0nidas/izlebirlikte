@@ -21,7 +21,7 @@ after that you can easily use the app with that code to run in terminal/cmd (at 
 ``node app.js`` 
 
 open this URL ----> ``localhost:3000``
-to test original web site ---->  izlebiirlikte.live
+to test original web site ---->  https://izlebirlikte.live/
 
 TR
 
@@ -42,4 +42,4 @@ Sonrasında uygulamayı şu kodu terminal/cmd'de çalıştırarak bulabilirsiniz
 ``node app.js`` 
 
 bu URL'yi açın ----> ``localhost:3000``
-asıl siteyi test etmek için ---->  izlebirlikte.live
+asıl siteyi test etmek için ---->  https://izlebirlikte.live/
